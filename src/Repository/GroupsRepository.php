@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\GroupTeam;
+use App\Entity\Groups;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method GroupTeam|null find($id, $lockMode = null, $lockVersion = null)
- * @method GroupTeam|null findOneBy(array $criteria, array $orderBy = null)
- * @method GroupTeam[]    findAll()
- * @method GroupTeam[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Groups|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Groups|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Groups[]    findAll()
+ * @method Groups[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class GroupTeamRepository extends ServiceEntityRepository
+class GroupsRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, GroupTeam::class);
+        parent::__construct($registry, Groups::class);
     }
 
 //    /**
-//     * @return GroupTeam[] Returns an array of GroupTeam objects
+//     * @return Groups[] Returns an array of Groups objects
 //     */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class GroupTeamRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?GroupTeam
+    public function findOneBySomeField($value): ?Groups
     {
         return $this->createQueryBuilder('g')
             ->andWhere('g.exampleField = :val')

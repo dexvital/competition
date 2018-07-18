@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\GroupRepository")
  */
-class Group
+class Groups
 {
     /**
      * @ORM\Id()
@@ -31,7 +31,7 @@ class Group
      */
     private $competition_id;
 
-    /** @ORM\OneToMany(targetEntity="App\Entity\GroupTeam", mappedBy="group") */
+    /** @ORM\OneToMany(targetEntity="App\Entity\GroupsTeam", mappedBy="groups") */
     protected $teams;
 
     public function getId()

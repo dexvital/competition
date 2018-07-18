@@ -26,7 +26,7 @@ class Team
      */
     private $total_wins;
 
-    /** @ORM\OneToMany(targetEntity="App\Entity\GroupTeam", mappedBy="team") */
+    /** @ORM\OneToMany(targetEntity="App\Entity\GroupsTeam", mappedBy="team") */
     protected $groups;
 
     public function getId()

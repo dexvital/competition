@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\GroupTeamRepository")
  */
-class GroupTeam
+class GroupsTeam
 {
     /**
      * @ORM\Id()
@@ -27,13 +27,13 @@ class GroupTeam
 //    private $team_id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Group", inversedBy="groupTeam")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Groups", inversedBy="groupsTeam")
      * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
      */
     private $group;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Team", inversedBy="groupTeam")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Team", inversedBy="groupsTeam")
      * @ORM\JoinColumn(name="team_id", referencedColumnName="id")
      */
     private $team;
@@ -77,7 +77,7 @@ class GroupTeam
 
     /**
      * @param $group
-     * @return GroupTeam
+     * @return GroupsTeam
      */
     public function setGroup($group): self
     {
@@ -96,7 +96,7 @@ class GroupTeam
 
     /**
      * @param $team
-     * @return GroupTeam
+     * @return GroupsTeam
      */
     public function setTeam($team): self
     {
