@@ -5,10 +5,13 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\GroupRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\GroupsRepository")
  */
 class Groups
 {
+    const TYPE_ALLVSALL = 'AllVsAll';
+    const TYPE_FINAL = 'Final';
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -34,9 +37,22 @@ class Groups
     /** @ORM\OneToMany(targetEntity="App\Entity\GroupsTeam", mappedBy="groups") */
     protected $teams;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Competition", inversedBy="groups")
+     * @ORM\JoinColumn(name="competition_id", referencedColumnName="id")
+     */
+    private $competition;
+
     public function getId()
     {
         return $this->id;
+    }
+
+    public function setId($id): self
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function getName(): ?string
@@ -83,6 +99,18 @@ class Groups
     public function setTeams($teams): self
     {
         $this->teams = $teams;
+
+        return $this;
+    }
+
+    public function getCompetition()
+    {
+        return $this->competition;
+    }
+
+    public function setCompetition($competition): self
+    {
+        $this->competition = $competition;
 
         return $this;
     }

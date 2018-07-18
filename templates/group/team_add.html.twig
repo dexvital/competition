@@ -1,0 +1,54 @@
+{% extends 'main.html.twig' %}
+
+{% block content %}
+
+    <br />
+    <div class="row title_row">
+        <div class="col-sm-2 col-md-2">
+            <a href="{{ path('group_edit') }}" class="btn btn-primary" type="button">
+                Add
+            </a>
+        </div>
+        <div class="col-sm-10 col-md-10">
+            {{ form_start(team_add_form, {'action' : path('group_edit')}) }}
+            {{ form_widget(team_add_form) }}
+
+            <div class="form-group row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10">
+                    <button type="submit" id="group_save" class="btn-primary btn">{% trans %}Save{% endtrans %}</button>
+                </div>
+            </div>
+            {{ form_end(team_add_form) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-12">
+            <table class="table table-striped">
+                <tbody>
+                {% for team in t_paginated %}
+
+                    <tr>
+                        <td>{{ team.id }}</td>
+                        <td>{{ team.name }}</td>
+                        <td>{{ team.competition.name }}</td>
+                        <td><a role="button" class="btn btn-primary"
+                               href="{{ path('group_edit',{'groupId':team.id, 'page':app.request.query.get("page")}) }}">Edit</a>
+                            <a role="button" class="btn btn-primary"
+                               href="{{ path('group_team_edit',{'groupId':team.id, 'page':app.request.query.get("page")}) }}">Add/Edit Team</a>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2 col-md-2"></div>
+        <div class="col-sm-8 col-md-8">
+            {{ knp_pagination_render(t_paginated) }}
+        </div>
+        <div class="col-sm-2 col-md-2"></div>
+    </div>
+
+{% endblock %}
+
