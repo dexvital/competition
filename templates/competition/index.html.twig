@@ -6,7 +6,7 @@
     <br />
     <div class="row title_row">
         <div class="col-sm-2 col-md-2">
-            <a href="{{ path('competition_edit') }}" class="btn btn-sm btn-success" type="button">
+            <a href="{{ path('competition_edit') }}" class="btn btn-primary" type="button">
                 Add
             </a>
         </div>
@@ -22,7 +22,7 @@
                     <tr>
                         <td>{{ comp.id }}</td>
                         <td>{{ comp.name }}</td>
-                        <td><a type="button" class="btn btn-sm btn-default"
+                        <td><a type="button" class="btn btn-primary"
                                href="{{ path('competition_edit',{'competitionId':comp.id, 'page':app.request.query.get("page")}) }}">Edit</a>
                     </tr>
                 {% endfor %}

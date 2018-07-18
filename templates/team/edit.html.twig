@@ -3,16 +3,16 @@
 {% block content %}
 
     <br />
-    {{ form_start(competition_form, {'action' : path('competition_edit')}) }}
-    {{ form_widget(competition_form) }}
+    {{ form_start(team_form, {'action' : path('team_edit')}) }}
+    {{ form_widget(team_form) }}
 
     <div class="form-group row">
         <div class="col-sm-2"></div>
         <div class="col-sm-10">
-            <button type="submit" id="competition_save" class="btn-primary btn">{% trans %}Save{% endtrans %}</button>
+            <button type="submit" id="team_save" class="btn-primary btn">{% trans %}Save{% endtrans %}</button>
         </div>
     </div>
-    {{ form_end(competition_form) }}
+    {{ form_end(team_form) }}
 
     <script>
         jQuery( document ).ready(function() {
