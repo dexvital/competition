@@ -1,20 +1,40 @@
 {% extends 'main.html.twig' %}
 
-{% block title %}Hello {{ controller_name }}!{% endblock %}
+{% block title %}Competitions!{% endblock %}
 
 {% block content %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <br />
+    <div class="row title_row">
+        <div class="col-sm-2 col-md-2">
+            <a href="{{ path('competition_edit') }}" class="btn btn-sm btn-success" type="button">
+                Add
+            </a>
+        </div>
+        <div class="col-sm-10 col-md-10">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-12">
+            <table class="table table-striped">
+                <tbody>
+                {% for comp in c_paginated %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'src/Controller/CompetitionController.php'|file_link(0) }}">src/Controller/CompetitionController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'templates/competition/index.html.twig'|file_link(0) }}">templates/competition/index.html.twig</a></code></li>
-    </ul>
-</div>
+                    <tr>
+                        <td>{{ comp.id }}</td>
+                        <td>{{ comp.name }}</td>
+                        <td><a type="button" class="btn btn-sm btn-default"
+                               href="{{ path('competition_edit',{'competitionId':comp.id, 'page':app.request.query.get("page")}) }}">Edit</a>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2 col-md-2"></div>
+        <div class="col-sm-8 col-md-8">
+            {{ knp_pagination_render(c_paginated) }}
+        </div>
+        <div class="col-sm-2 col-md-2"></div>
+    </div>
 {% endblock %}
