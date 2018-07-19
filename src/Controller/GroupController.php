@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Groups;
+use App\Entity\GroupsTeam;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use App\Form\GroupType;
+use App\Form\GroupsTeamType;
 
 class GroupController extends Controller
 {
@@ -101,11 +103,92 @@ class GroupController extends Controller
      */
     public function team_add($groupId, $page, Request $request)
     {
+
+        if (empty($groupId)) {
+            $postData = $request->get('groups_team');
+            if (isset($postData['group_id'])) {
+                $groupId = (int)$postData['group_id'];
+            }
+        }
+
+        $group = $this->getDoctrine()
+            ->getRepository('App:Groups')
+            ->find($groupId);
+        if (empty($group)){
+            throw $this->createNotFoundException(
+                'No group work found for id '.$groupId
+            );
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery(
+                    'SELECT g
+                    FROM App:GroupsTeam g
+                    WHERE g.group = :group
+                    ORDER BY g.id DESC'
+                )->setParameter('group', $group);
+        $teams = $query->getResult();
+
+        $paginator = $this->get('knp_paginator');
+        $teams = $paginator->paginate(
+            $teams,
+            $request->query->getInt('page', 1),
+            self::PER_PAGE
+        );
+
+        $groupsTeam = new GroupsTeam();
+        $groupsTeam->setGroup($group);
+
+        $groupsTeamForm = $this->createForm(GroupsTeamType::class, $groupsTeam);
+        $groupsTeamForm->get('page')->setData($page);
+        $groupsTeamForm->get('group_id')->setData($groupId);
+
+        $groupsTeamForm->handleRequest($request);
+
+        if ($groupsTeamForm->isSubmitted() && $groupsTeamForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($groupsTeam);
+            try {
+                $em->flush();
+                return $this->redirect($this->generateUrl('group_team_add', [
+                    'groupId' => $groupId,
+                    'page'=>$groupsTeamForm->get('page')->getData()
+                ]));
+            } catch (\Exception $e) {
+                throw $e;
+            }
+        }
+
+
         return $this->render(
-            'group/team_edit.html.twig',
+            'group/team_add.html.twig',
             array(
-//                'group_form' => $groupForm->createView()
+                't_paginated' => $teams,
+                'groups_team_form' => $groupsTeamForm->createView()
             )
         );
+    }
+
+    /**
+     * @Route("/group/team/delete/{groupsTeamId}/{page}",
+     *     defaults={"groupsTeamId" = 0, "page" = 1},
+     *     requirements={"groupsTeamId": "\d+"},
+     *     name="group_team_delete")
+     * )
+     */
+    public function team_delete($groupsTeamId, $page, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $groupsTeam = $em->getRepository('App:GroupsTeam')->find($groupsTeamId);
+        $groupId = $groupsTeam->getGroup()->getId();
+        if (!$groupsTeam) {
+            throw $this->createNotFoundException(
+                'No category found for id '.$groupsTeamId
+            );
+        }
+
+        $em->remove($groupsTeam);
+        $em->flush();
+        return $this->redirect($this->generateUrl('group_team_add', ['groupId' => $groupId, 'page'=>$page]));
     }
 }

@@ -4,38 +4,30 @@
 
     <br />
     <div class="row title_row">
-        <div class="col-sm-2 col-md-2">
-            <a href="{{ path('group_edit') }}" class="btn btn-primary" type="button">
-                Add
-            </a>
-        </div>
-        <div class="col-sm-10 col-md-10">
-            {{ form_start(team_add_form, {'action' : path('group_edit')}) }}
-            {{ form_widget(team_add_form) }}
+        <div class="col-sm-12 col-md-12">
+            {{ form_start(groups_team_form, {'action' : path('group_team_add')}) }}
+            {{ form_widget(groups_team_form) }}
 
             <div class="form-group row">
                 <div class="col-sm-2"></div>
                 <div class="col-sm-10">
-                    <button type="submit" id="group_save" class="btn-primary btn">{% trans %}Save{% endtrans %}</button>
+                    <button type="submit" id="group_save" class="btn-primary btn">{% trans %}Add{% endtrans %}</button>
                 </div>
             </div>
-            {{ form_end(team_add_form) }}
+            {{ form_end(groups_team_form) }}
         </div>
     </div>
     <div class="row">
         <div class="col-sm-12 col-md-12">
             <table class="table table-striped">
                 <tbody>
-                {% for team in t_paginated %}
+                {% for grTm in t_paginated %}
 
                     <tr>
-                        <td>{{ team.id }}</td>
-                        <td>{{ team.name }}</td>
-                        <td>{{ team.competition.name }}</td>
+                        <td>{{ grTm.id }}</td>
+                        <td>{{ grTm.team.name }}</td>
                         <td><a role="button" class="btn btn-primary"
-                               href="{{ path('group_edit',{'groupId':team.id, 'page':app.request.query.get("page")}) }}">Edit</a>
-                            <a role="button" class="btn btn-primary"
-                               href="{{ path('group_team_edit',{'groupId':team.id, 'page':app.request.query.get("page")}) }}">Add/Edit Team</a>
+                               href="{{ path('group_team_delete', {'groupsTeamId':grTm.id, 'page':app.request.query.get("page")}) }}">{% trans %}Delete{% endtrans %}</a>
                     </tr>
                 {% endfor %}
                 </tbody>

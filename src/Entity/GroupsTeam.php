@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\GroupTeamRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\GroupsTeamRepository")
  */
 class GroupsTeam
 {
@@ -15,12 +15,12 @@ class GroupsTeam
      * @ORM\Column(type="integer")
      */
     private $id;
-//
-//    /**
-//     * @ORM\Column(type="integer")
-//     */
-//    private $group_id;
-//
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $group_id;
+
 //    /**
 //     * @ORM\Column(type="integer")
 //     */
@@ -43,17 +43,17 @@ class GroupsTeam
         return $this->id;
     }
 
-//    public function getGroupId(): ?int
-//    {
-//        return $this->group_id;
-//    }
-//
-//    public function setGroupId(int $group_id): self
-//    {
-//        $this->group_id = $group_id;
-//
-//        return $this;
-//    }
+    public function getGroupId(): ?int
+    {
+        return $this->group_id;
+    }
+
+    public function setGroupId(int $group_id): self
+    {
+        $this->group_id = $group_id;
+
+        return $this;
+    }
 //
 //    public function getTeamId(): ?int
 //    {
